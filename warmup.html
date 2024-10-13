@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //Recursion Warmup, it's fibonnaci again lol - with a catch: This time I need to return an array
+
+      //Iterative
+      function fibs(n) {
+        let arr = [0, 1]; //Fencepost problem, fib starts with 0
+        let sum;
+        let oldVal = 0;
+        let newVal = 1;
+
+        for (i = 1; i < n; i++) {
+          sum = newVal + oldVal;
+          arr.push(sum);
+          oldVal = newVal;
+          newVal = sum;
+        }
+        return arr;
+      }
+
+      //Recursive - with array returned
+      function fibsRec(n) {
+        let arr = [n];
+        if (n < 1) {
+          return 0;
+        } else if (n === 1) {
+          return 1;
+        } else {
+          let newF = fibsRec(n - 1);
+          let oldF = fibsRec(n - 2);
+          arr[n] = newF + oldF;
+          arr.push(newF + oldF);
+          return arr[n];
+        }
+      }
+
+      /* Recursive - without array (task requirement: with array)
+      function fibsRec(n) {
+        if (n < 1) {
+          return 0;
+        } else if (n === 1) {
+          return 1;
+        } else {
+          return (n = fibsRec(n - 1) + fibsRec(n - 2));
+        }
+      }
+      */
+
+      console.log(fibs(10)); // DELETE ME - only for checking
+
+      //Tests - time to learn TDD?
+
+      /*
+      console.log(fibs(7)); // Expected output === 13 PASSED
+      console.log(fibs(20)); //Expected output === 6765 PASSED
+      */
+
+      console.log(fibsRec(7)); // Expected output === 13
+      //console.log(fibsRec(20)); //Expected output === 6765
+
+      /* Doing recursion makes me want to learn TypeScript and have static typing - not for this particular case, but for previous repo I've done; saves the "typeof n =='number", it's borderline rabid that the type value is stored in strings
+
+      Also, probs a good idea to read on this later:
+      https://github.com/nodejs/nodejs.dev/blob/aa4239e87a5adc992fdb709c20aebb5f6da77f86/content/learn/command-line/node-run-cli.en.md
+       */
+    </script>
+  </body>
+</html>
