@@ -25,24 +25,23 @@
         return arr;
       }
 
-      //Recursive - with array returned
+      /*Recursive - with array returned */
+
       function fibsRec(n) {
-        let arr = [n];
         if (n < 1) {
-          return 0;
+          return [0];
         } else if (n === 1) {
-          return 1;
+          return [0, 1];
         } else {
-          let newF = fibsRec(n - 1);
-          let oldF = fibsRec(n - 2);
-          arr[n] = newF + oldF;
-          arr.push(newF + oldF);
-          return arr[n];
+          let arr = fibsRec(n - 1);
+          arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
+          return arr;
         }
       }
 
-      /* Recursive - without array (task requirement: with array)
+      /* Recursive - without array (task requirement: with array) 
       function fibsRec(n) {
+        console.log("This was printed recursively");
         if (n < 1) {
           return 0;
         } else if (n === 1) {
@@ -51,10 +50,8 @@
           return (n = fibsRec(n - 1) + fibsRec(n - 2));
         }
       }
+
       */
-
-      console.log(fibs(10)); // DELETE ME - only for checking
-
       //Tests - time to learn TDD?
 
       /*
@@ -63,7 +60,7 @@
       */
 
       console.log(fibsRec(7)); // Expected output === 13
-      //console.log(fibsRec(20)); //Expected output === 6765
+      console.log(fibsRec(20)); //Expected output === 6765
 
       /* Doing recursion makes me want to learn TypeScript and have static typing - not for this particular case, but for previous repo I've done; saves the "typeof n =='number", it's borderline rabid that the type value is stored in strings
 

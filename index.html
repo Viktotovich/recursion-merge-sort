@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* Pseudocode:
+        Sort the left side of the array
+        Sort the right side of the array
+        merge sorted halves
+      */
+
+      function mergeSort(arr) {
+        let endIndex = arr.length - 1;
+        if (0 === endIndex) {
+          return arr;
+        } else if (arr.length >= 2) {
+          //split into two
+          let halfOfArr = Math.round(endIndex / 2);
+          let splitLeft = arr.slice(0, halfOfArr);
+          let splitRight = arr.slice(halfOfArr);
+
+          let leftArr = mergeSort(splitLeft);
+          let rightArr = mergeSort(splitRight);
+
+          if (leftArr[0] >= rightArr[0]) {
+            console.log(leftArr, rightArr);
+            return rightArr.concat(leftArr);
+          } else {
+            return leftArr.concat(rightArr);
+          }
+        }
+      }
+
+      // Tests:
+      let testArrOne = [3, 2, 1, 13, 8, 5, 0, 1];
+      let testArrTwo = [105, 79, 100, 110];
+
+      console.log(mergeSort(testArrOne));
+      console.log(mergeSort(testArrTwo));
+    </script>
+  </body>
+</html>
