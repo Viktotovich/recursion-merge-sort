@@ -14,6 +14,38 @@
       */
 
       function mergeSort(arr) {
+        console.log(arr);
+        let arrEnd = arr.length - 1;
+        let arrHalf = Math.round(arr.length / 2);
+        let splitLeft = arr.slice(0, arrHalf);
+        let splitRight = arr.slice(arrHalf);
+
+        if (arr.length === 1) {
+          return;
+        } else if (arr.length > 1) {
+          /*
+          Ideas so far: everything on top is more or less right - my best attempt sorted the deepest level of merge - but could not sort subsequent lairs
+
+          I have no problem splitting the array and going to a deep layer, the problem arises when I need to sort/merge n+n recursion depth. This is due to the fact that my algorithm only compares indices at 0 - and any index above that is ignored (unintentionally).
+
+          In other words, I need to figure out how to evaluate the arr in such a way (without using iterators, ofcourse) that an array [2, 4] [1, 8] for e.g will compare arr1[0] vs arr2[0], and keep comparing for values in arr[1] and arr[2].
+
+          Key thing I have a gut feeling about, is that it's better to modify the arr rather than returning a copy. i.e: leftSideSorted.concat(rightSideSorted)
+          */
+        }
+      }
+
+      // Tests:
+      let testArrOne = [3, 2, 1, 13, 8, 5, 0, 1];
+      let testArrTwo = [105, 79, 100, 110];
+
+      console.log(mergeSort(testArrOne));
+      console.log(mergeSort(testArrTwo));
+
+      /*
+            function mergeSort(arr) {
+        console.log(arr);
+
         let endIndex = arr.length - 1;
         if (0 === endIndex) {
           return arr;
@@ -26,8 +58,8 @@
           let leftArr = mergeSort(splitLeft);
           let rightArr = mergeSort(splitRight);
 
+          console.log(splitLeft, splitRight);
           if (leftArr[0] >= rightArr[0]) {
-            console.log(leftArr, rightArr);
             return rightArr.concat(leftArr);
           } else {
             return leftArr.concat(rightArr);
@@ -35,12 +67,80 @@
         }
       }
 
-      // Tests:
-      let testArrOne = [3, 2, 1, 13, 8, 5, 0, 1];
-      let testArrTwo = [105, 79, 100, 110];
+      Attempt 2 (the one that got closest, there were many many more) - and it's somehow further to the answer from the first attempt
 
-      console.log(mergeSort(testArrOne));
-      console.log(mergeSort(testArrTwo));
+      function mergeSort(arr) {
+        console.log(arr);
+        let arrStart = 0;
+        let arrEnd = arr.length - 1;
+        let arrHalf = Math.round(arr.length / 2);
+        let splitLeft = arr.slice(0, arrHalf);
+        let splitRight = arr.slice(arrHalf);
+
+        if (arr.length === 1) {
+          return arr;
+        } else if (arr.length > 1) {
+          let arrLeft = mergeSort(splitLeft);
+          let arrRight = mergeSort(splitRight);
+          arr = arrLeft.concat(arrRight);
+          if (arr[0] >= arr[1]) {
+            [arr[0], arr[1]] = [arr[1], arr[0]];
+            return arr;
+          } else {
+            [arr[1], arr[0]] = [arr[0], arr[1]];
+            return arr;
+          }
+        }
+      }
+
+
+      nth attempt 
+            function mergeSort(arr) {
+        console.log(arr);
+        let arrEnd = arr.length - 1;
+        let arrHalf = Math.round(arr.length / 2);
+        let splitLeft = arr.slice(0, arrHalf);
+        let splitRight = arr.slice(arrHalf);
+
+        if (arr.length === 1) {
+          return;
+        } else if (arr.length > 1) {
+          let arrLeft = mergeSort(splitLeft);
+
+          if (arr[0] >= arr[1]) {
+            [arr[0], arr[1]] = [arr[1], arr[0]];
+          } else {
+            [arr[1], arr[0]] = [arr[0], arr[1]];
+          }
+
+          let arrRight = mergeSort(splitRight);
+          return arr;
+        }
+      }
+
+
+            function mergeSort(arr) {
+        console.log(arr);
+        let arrEnd = arr.length - 1;
+        let arrHalf = Math.round(arr.length / 2);
+        let splitLeft = arr.slice(0, arrHalf);
+        let splitRight = arr.slice(arrHalf);
+
+        if (arr.length === 1) {
+          return;
+        } else if (arr.length > 1) {
+          if (splitLeft[0] >= splitRight[0]) {
+            arr.concat(splitLeft.concat(splitRight));
+          } else {
+            arr.concat(splitRight.concat(splitLeft));
+          }
+          let arrLeft = mergeSort(splitLeft);
+          let arrRight = mergeSort(splitRight);
+          let sortedArr = [];
+          return arr;
+        }
+      }
+      */
     </script>
   </body>
 </html>
