@@ -49,11 +49,40 @@
       // Tests:
       let testArrOne = [3, 2, 1, 13, 8, 5, 0, 1];
       let testArrTwo = [105, 79, 100, 110];
+      let testArrThree = [105, 79, 100, 110, 111];
 
       console.log(mergeSort(testArrOne));
       console.log(mergeSort(testArrTwo));
+      console.log(mergeSort(testArrThree));
 
+      /*I dont have a teacher to review the code, and needed more cases which could potentially be missed.
+
+      I've asked GPT for more tests, and this is what it gave me:
+        "This test case involves negative numbers and descending order. The code could miss elements when one of the arrays is fully processed before the other because it does not handle the case where there are still remaining elements in either leftArr or rightArr after the main loop."
+      */
+      let testArrFour = [4, 3, 2, 1, 0, -1, -2, -3];
+      console.log(mergeSort(testArrFour));
+      //Spoilers: it works anyways. Get rekt GPT
+
+      /* GPT got spiteful:
+        "It's great that your code worked with these test cases! However, you might still encounter issues if one of the arrays becomes fully exhausted before the other in different scenarios. An example that could still expose flaws in the algorithm involves an edge case where one of the sub-arrays has all smaller or larger values. For instance:"
+      */
+
+      let testArrEdgeCase = [1, 1, 1, 1, 0, 0, 0, 0];
+      console.log(mergeSort(testArrEdgeCase));
+      //Cowabunga, it still works.
+
+      /* Also goddamnit, the reason it took me so long is because all this time my brain made it forbidden to think of iterative loops in a recursive solutions, as the whole point was to do it recursively rather than iteratively. 
+      
+      I knew I was on to something when I realized that there is no way we can compare each index at higher n levels without going through each. One idea was to make the arr smaller, but that wouldnt work - the other was a while loop, I only switched to the for loop because the while loop duplicated the smaller values and gave undefined. While (pun intended) the problem was with the logic of the loop, and could be improved - for loop was just significantly easier to visualize, and more rewarding to work with - which at the end, was my go-to tool for the job.
+
+      Either way, if there is an advice I'd give myself that just started doing this - it'd be to sleep more. The time taken, the pain that goes into working through the puzzles, and the frustrations are their own reward. 
+
+      */
       /*
+          Graveyard of previous attempts (most notable, I've had way more):
+
+
             function mergeSort(arr) {
         console.log(arr);
 
@@ -152,7 +181,7 @@
         }
       }
 
-          Ideas so far: everything on top is more or less right - my best attempt sorted the deepest level of merge - but could not sort subsequent lairs
+          Ideas so far: everything on top is more or less right - my best attempt sorted the deepest level of merge - but could not sort subsequent layers
 
           I have no problem splitting the array and going to a deep layer, the problem arises when I need to sort/merge n+n recursion depth. This is due to the fact that my algorithm only compares indices at 0 - and any index above that is ignored (unintentionally).
 
