@@ -12,27 +12,38 @@
         Sort the right side of the array
         merge sorted halves
       */
-
       function mergeSort(arr) {
-        console.log(arr);
-        let arrEnd = arr.length - 1;
-        let arrHalf = Math.round(arr.length / 2);
-        let splitLeft = arr.slice(0, arrHalf);
-        let splitRight = arr.slice(arrHalf);
-
-        if (arr.length === 1) {
-          return;
-        } else if (arr.length > 1) {
-          /*
-          Ideas so far: everything on top is more or less right - my best attempt sorted the deepest level of merge - but could not sort subsequent lairs
-
-          I have no problem splitting the array and going to a deep layer, the problem arises when I need to sort/merge n+n recursion depth. This is due to the fact that my algorithm only compares indices at 0 - and any index above that is ignored (unintentionally).
-
-          In other words, I need to figure out how to evaluate the arr in such a way (without using iterators, ofcourse) that an array [2, 4] [1, 8] for e.g will compare arr1[0] vs arr2[0], and keep comparing for values in arr[1] and arr[2].
-
-          Key thing I have a gut feeling about, is that it's better to modify the arr rather than returning a copy. i.e: leftSideSorted.concat(rightSideSorted)
-          */
+        let endIndex = arr.length - 1;
+        if (endIndex === 0) {
+          return arr;
         }
+
+        let halfOfArr = Math.round(endIndex / 2);
+        let splitLeft = arr.slice(0, halfOfArr);
+        let splitRight = arr.slice(halfOfArr);
+
+        let leftArr = mergeSort(splitLeft);
+        let rightArr = mergeSort(splitRight);
+        let mergedArr = [];
+        let indexL = 0;
+        let indexR = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+          if (
+            leftArr[indexL] > rightArr[indexR] &&
+            leftArr[indexL] !== undefined
+          ) {
+            mergedArr.push(rightArr[indexR]);
+            indexR++;
+          } else if (leftArr[indexL] !== undefined) {
+            mergedArr.push(leftArr[indexL]);
+            indexL++;
+          } else {
+            mergedArr.push(rightArr[indexR]);
+            indexR++;
+          }
+        }
+        return mergedArr;
       }
 
       // Tests:
@@ -94,7 +105,7 @@
       }
 
 
-      nth attempt 
+      nth attempt
             function mergeSort(arr) {
         console.log(arr);
         let arrEnd = arr.length - 1;
@@ -139,6 +150,81 @@
           let sortedArr = [];
           return arr;
         }
+      }
+
+          Ideas so far: everything on top is more or less right - my best attempt sorted the deepest level of merge - but could not sort subsequent lairs
+
+          I have no problem splitting the array and going to a deep layer, the problem arises when I need to sort/merge n+n recursion depth. This is due to the fact that my algorithm only compares indices at 0 - and any index above that is ignored (unintentionally).
+
+          In other words, I need to figure out how to evaluate the arr in such a way (without using iterators, ofcourse) that an array [2, 4] [1, 8] for e.g will compare arr1[0] vs arr2[0], and keep comparing for values in arr[1] and arr[2].
+
+          Key thing I have a gut feeling about, is that it's better to modify the arr rather than returning a copy. i.e: leftSideSorted.concat(rightSideSorted)
+
+
+           function mergeSort(arr) {
+        console.log(arr);
+        let arrEnd = arr.length - 1;
+        let arrHalf = Math.round(arr.length / 2);
+        let splitLeft = arr.slice(0, arrHalf);
+        let splitRight = arr.slice(arrHalf);
+
+        if (arr.length === 1) {
+          return;
+        } else if (arr.length > 1) {
+          let arrLeft = mergeSort(splitLeft);
+
+          if (arrLeft[0] > arrLeft[arrEnd]) {
+            [arr[arrEnd], arr[0]] = [arrLeft[0], arrLeft[arrEnd]];
+            return arr;
+          }
+
+          let arrRight = mergeSort(splitRight);
+          if (arrRight[0] > arrRight[arrEnd]) {
+            [arr[arrEnd], arr[0]] = [arrRight[0], arrRight[arrEnd]];
+            return arr;
+          }
+
+          let sortedArr =
+            arrLeft[0] > arrRight[0]
+              ? arrRight.concat[arrLeft]
+              : arrLeft.concat[arrRight];
+          return sortedArr;
+        }
+      }
+
+            function mergeSort(arr) {
+        let endIndex = arr.length - 1;
+        if (endIndex === 0) {
+          return arr;
+        }
+
+        let halfOfArr = Math.round(endIndex / 2);
+        let splitLeft = arr.slice(0, halfOfArr);
+        let splitRight = arr.slice(halfOfArr);
+
+        let leftArr = mergeSort(splitLeft);
+        let rightArr = mergeSort(splitRight);
+        let mergedArr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (leftArr[0] === undefined || rightArr[0] === undefined) {
+            //too lazy to deal with undefined in a smart way, this works. I spent 2 days on this god damnit I just want it to work - fixings come later
+            leftArr.push(0);
+            rightArr.push(0);
+          }
+
+          if (leftArr[0] > rightArr[0]) {
+            mergedArr.push(rightArr[0]);
+            rightArr.shift(1);
+            console.log(leftArr, rightArr);
+          } else {
+            mergedArr.push(rightArr[0]);
+            leftArr.shift(1);
+          }
+          console.log(mergedArr);
+        }
+
+        return mergedArr;
       }
       */
     </script>
